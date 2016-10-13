@@ -40,6 +40,7 @@
                                          
         self.navigationItem.rightBarButtonItem = enrollButton;
         self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.title = @"Enroll Courses";
         
         // We enable tableView in edit mode and allow multiple selections
         [self.tableView setAllowsMultipleSelectionDuringEditing:YES];
@@ -77,7 +78,8 @@
 
 -(void) enrollSelectedCourses {
     NSLog(@"Button enroll Selected Course");
-    
+    NSString *segueId = @"enrollSelectedCourses";
+    [self performSegueWithIdentifier:segueId sender: self.navigationItem.rightBarButtonItem];
 }
                                          
 // MARK: TableView Delegation
@@ -145,14 +147,6 @@
 }
 
 // MARK: Navigation
-
-//-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-//    // When the accessoryButton is tapped, trigger the segue editCourse
-//    NSString *segueId = @"editCourse";
-//    UITableViewCell *actionCell = [tableView cellForRowAtIndexPath:indexPath];
-//    
-//    [self performSegueWithIdentifier:segueId sender: actionCell];
-//}
 
 // Use the method below to allow to unwind data back from Course Detail View
 -(IBAction) unwindFromCourseDetail: (UIStoryboardSegue*) segue {

@@ -62,7 +62,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
                 <exit id="fQu-YZ-Ya9" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2982" y="160"/>
+            <point key="canvasLocation" x="2962" y="160"/>
         </scene>
         <!--Course Detail-->
         <scene sceneID="Cdi-yR-m3I">
@@ -434,7 +434,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFP-8B-Pnk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="odn-Ry-2AF" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2296" y="888"/>
+            <point key="canvasLocation" x="2264" y="892"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -490,7 +490,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q2G-4a-Oat" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3678" y="-474"/>
+            <point key="canvasLocation" x="3692" y="-458"/>
         </scene>
         <!--Students-->
         <scene sceneID="Rte-Xc-xl0">
@@ -536,7 +536,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9TM-G8-W2z"/>
-        <segue reference="avx-ns-nlM"/>
+        <segue reference="k8d-3t-Kyn"/>
         <segue reference="iYk-mH-9RL"/>
     </inferredMetricsTieBreakers>
 </document>
