@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Course.h"
+#import "CourseDetailViewController.h"
 
 @interface CoursesViewController : UITableViewController
+
+// MARK: Properties
+@property (strong, nonatomic) NSString* segueIdentifier;
+@property (strong, nonatomic) NSMutableArray<Course*> *enrolledCourses;
 
 // MARK: Navigation
 -(IBAction) unwindFromCourseDetail: (UIStoryboardSegue*) segue;

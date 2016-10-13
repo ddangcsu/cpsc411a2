@@ -7,6 +7,7 @@
 //
 
 #import "StudentDetailViewController.h"
+#import "CoursesViewController.h"
 
 @interface StudentDetailViewController ()
 // MARK: UI Properties
@@ -35,10 +36,13 @@
     // Populate the data if it's an edit
     if (self.aStudent != nil) {
         NSLog(@"Editing Student");
+        self.navigationItem.title = @"Edit Student";
         // We got data for editing.  Update the view.
         self.textFieldFirstName.text = self.aStudent.firstName;
         self.textFieldLastName.text = self.aStudent.lastName;
         self.textFieldCWID.text = self.aStudent.CWID;
+    } else {
+        self.navigationItem.title = @"Add Student";
     }
     
     NSLog(@"Adding New Student");
@@ -48,6 +52,64 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+// MARK: TextField Delegation
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if (sender == self.saveButton) {
+        NSLog(@"Save Student Data.  Pass it back");
+        
+        // Retrieve data
+        NSString *first = [self.textFieldFirstName.text capitalizedString];
+        NSString *last = [self.textFieldLastName.text capitalizedString];
+        NSString *cwid = self.textFieldCWID.text;
+        
+        // Create the student object
+        self.aStudent = [Student newStudentFirstName:first lastName:last andCWID:cwid];
+        
+    } else if ([segue.identifier isEqualToString: @"enrollCourses"]) {
+        NSLog(@"We are trying to enroll courses");
+        CoursesViewController *courseListVC = [segue destinationViewController];
+        courseListVC.segueIdentifier = segue.identifier;
+    }
+}
+
+// Method when unwind from Selected Course List
+-(void)unwindFromSelectedCourseList:(UIStoryboardSegue *)segue {
+    NSLog(@"Unwinded from Course List");
+}
+
+//MARK: Actions
+
+- (IBAction)cancelStudentDetail:(id)sender {
+    // Cancel to go back from Student Detail page
+    UIViewController *presentFromVC = self.presentingViewController;
+    
+    NSLog(@"Student Detail: %@", [presentFromVC class]);
+    if ([presentFromVC isKindOfClass:[UITabBarController class]]) {
+        // We got navigated from UITabBarController (Add Student)
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        // It was a direct navigation from Student List To Edit
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+}
+
+- (IBAction)validateToSave:(UIButton *)sender {
+    // Validate the Input and turn on/off the save button
+    self.saveButton.enabled = [self validateDataInput];
 }
 
 // Util Function to validate the data
@@ -81,55 +143,6 @@
     // If we get here, it means it's good
     return YES;
 }
-
-// MARK: TextField Delegation
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
-}
-
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    if (sender == self.saveButton) {
-        NSLog(@"Save Student Data.  Pass it back");
-        
-        // Retrieve data
-        NSString *first = [self.textFieldFirstName.text capitalizedString];
-        NSString *last = [self.textFieldLastName.text capitalizedString];
-        NSString *cwid = self.textFieldCWID.text;
-        
-        // Create the student object
-        self.aStudent = [Student newStudentFirstName:first lastName:last andCWID:cwid];
-        
-    }
-}
-
-
-- (IBAction)cancelStudentDetail:(id)sender {
-    // Cancel to go back from Student Detail page
-    UIViewController *presentFromVC = self.presentingViewController;
-    
-    NSLog(@"Student Detail: %@", [presentFromVC class]);
-    if ([presentFromVC isKindOfClass:[UITabBarController class]]) {
-        // We got navigated from UITabBarController (Add Student)
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } else {
-        // It was a direct navigation from Student List To Edit
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    
-}
-
-- (IBAction)validateToSave:(UIButton *)sender {
-    // Validate the Input and turn on/off the save button
-    self.saveButton.enabled = [self validateDataInput];
-}
-
 
 
 @end

@@ -33,10 +33,16 @@
     
     if (self.aCourse != nil) {
         // We got data for editing
+        self.navigationItem.title = @"Edit Course";
         self.textFieldName.text = self.aCourse.courseName;
         self.textFieldHomework.text = [NSString stringWithFormat:@"%.2f", self.aCourse.hWeight];
         self.textFieldMidterm.text = [NSString stringWithFormat:@"%.2f", self.aCourse.mWeight];
         self.textFieldFinal.text = [NSString stringWithFormat:@"%.2f", self.aCourse.fWeight];
+        
+    } else {
+        self.navigationItem.title = @"Add Course";
+        // Set focus and open keyboard on the course name
+        [self.textFieldName becomeFirstResponder];
     }
     
 }
@@ -105,6 +111,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIBarButtonItem*)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
     if (sender == self.saveButton) {
         NSString *name = [self.textFieldName.text uppercaseString];
         float hWeight = [self.textFieldHomework.text floatValue];

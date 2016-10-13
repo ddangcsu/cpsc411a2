@@ -7,8 +7,6 @@
 //
 
 #import "StudentsViewController.h"
-#import "StudentDetailViewController.h"
-#import "Student.h"
 
 @interface StudentsViewController ()
 @property (nonatomic, strong) NSMutableArray<Student*> *studentList;

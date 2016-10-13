@@ -14,4 +14,7 @@
 // MARK: Properties to pass data back and forth
 @property (strong, nonatomic) Student *aStudent;
 
+// MARK: Unwind segue for enroll courses
+-(IBAction) unwindFromSelectedCourseList: (UIStoryboardSegue*) segue;
+
 @end
