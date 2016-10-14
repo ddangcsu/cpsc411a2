@@ -22,6 +22,8 @@
 - (IBAction)courseDetailCancel:(UIBarButtonItem *)sender;
 - (IBAction)validateToSave:(UIButton *)sender;
 
+-(void) addDoneButton: (UITextField*) field;
+
 @end
 
 @implementation CourseDetailViewController
@@ -53,6 +55,26 @@
 }
 
 // MARK: Support Functions
+-(void) addDoneButton: (UITextField*) field {
+    // We create a Tool Bar and tell it to auto size
+    UIToolbar *toolBar = [[UIToolbar alloc] init];
+    [toolBar sizeToFit];
+    
+    // We create a FlexibleSpace to fill and push the Done button to the right for us
+    UIBarButtonItem *flexBar = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    // We create a Done button.  We set the target to the view so that it can call
+    // the delegate endEditing method
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self.view action:@selector(endEditing:)];
+    
+    // We add the two buttons into the toolBar
+    toolBar.items = @[flexBar, doneButton];
+    
+    // We add it to the field's Input AccesoryView
+    field.inputAccessoryView = toolBar;
+}
+
+
 -(BOOL) validateDataInput {
     
     // Hide keyboards
@@ -103,6 +125,20 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	if (textField == self.textFieldHomework ||
+        textField == self.textFieldMidterm ||
+        textField == self.textFieldFinal) {
+        // We add the Button button toolbar onto the keypad
+        [self addDoneButton:textField];
+    }
+    return YES;
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+
 }
 
 #pragma mark - Navigation
