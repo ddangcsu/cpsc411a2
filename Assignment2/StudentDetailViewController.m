@@ -27,6 +27,7 @@
 
 // MARK: Utilities
 - (BOOL) validateDataInput;
+- (void) addDoneButton: (UITextField*) field;
 
 @end
 
@@ -71,6 +72,14 @@
 // MARK: TextField Delegation
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    return YES;
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    // Add custom Done button to numeric keypad
+    if (textField == self.textFieldCWID) {
+        [self addDoneButton:textField];
+    }
     return YES;
 }
 
@@ -229,5 +238,24 @@
     return YES;
 }
 
+// MARK: Support Functions
+-(void) addDoneButton: (UITextField*) field {
+    // We create a Tool Bar and tell it to auto size
+    UIToolbar *toolBar = [[UIToolbar alloc] init];
+    [toolBar sizeToFit];
+    
+    // We create a FlexibleSpace to fill and push the Done button to the right for us
+    UIBarButtonItem *flexBar = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    // We create a Done button.  We set the target to the view so that it can call
+    // the delegate endEditing method
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self.view action:@selector(endEditing:)];
+    
+    // We add the two buttons into the toolBar
+    toolBar.items = @[flexBar, doneButton];
+    
+    // We add it to the field's Input AccesoryView
+    field.inputAccessoryView = toolBar;
+}
 
 @end
