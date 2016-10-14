@@ -60,6 +60,29 @@
     return YES;
 }
 
+// MARK: TableView Delegation
+
+// MARK: TableView DataSource
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 0;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of enrolled Courses
+    return self.aStudent.enrolledCourses.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString* cellId = @"enrolledCourceCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
+    
+    EnrolledCourse* course = self.aStudent.enrolledCourses[indexPath.row];
+    
+    cell.textLabel.text = course.courseName;
+    cell.detailTextLabel.text = [course getScores];
+    
+    return cell;
+}
 
 #pragma mark - Navigation
 

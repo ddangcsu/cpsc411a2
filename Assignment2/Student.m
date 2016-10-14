@@ -16,7 +16,7 @@
         self.firstName = first;
         self.lastName = last;
         self.CWID = cwid;
-        self.enrolledCourses = nil;
+        self.enrolledCourses = [[NSMutableArray alloc] init];
     }
     return self;
 }

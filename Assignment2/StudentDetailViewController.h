@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Student.h"
 
-@interface StudentDetailViewController : UIViewController <UITextFieldDelegate>
+@interface StudentDetailViewController : UIViewController
+<UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
 // MARK: Properties to pass data back and forth
 @property (strong, nonatomic) Student *aStudent;
