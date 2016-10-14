@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		634B4E441DB012B500FEC690 /* EnrolledCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 634B4E431DB012B500FEC690 /* EnrolledCourse.m */; };
 		6361E1101DAD356F00A54376 /* CourseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6361E10E1DAD356F00A54376 /* CourseDetailViewController.m */; };
 		63B75F0D1DABF74A0060C401 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B75F0C1DABF74A0060C401 /* main.m */; };
 		63B75F101DABF74A0060C401 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B75F0F1DABF74A0060C401 /* AppDelegate.m */; };
@@ -22,8 +21,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		634B4E421DB012B500FEC690 /* EnrolledCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnrolledCourse.h; sourceTree = "<group>"; };
-		634B4E431DB012B500FEC690 /* EnrolledCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnrolledCourse.m; sourceTree = "<group>"; };
 		6361E10D1DAD356F00A54376 /* CourseDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseDetailViewController.h; sourceTree = "<group>"; };
 		6361E10E1DAD356F00A54376 /* CourseDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseDetailViewController.m; sourceTree = "<group>"; };
 		63B75F081DABF7490060C401 /* Assignment2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,8 +101,6 @@
 				63B75F281DACC9210060C401 /* Course.m */,
 				63D519C21DAEB7E500DE6C6D /* Student.h */,
 				63D519C31DAEB7E500DE6C6D /* Student.m */,
-				634B4E421DB012B500FEC690 /* EnrolledCourse.h */,
-				634B4E431DB012B500FEC690 /* EnrolledCourse.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -203,7 +198,6 @@
 				63B75F0D1DABF74A0060C401 /* main.m in Sources */,
 				63D519C41DAEB7E500DE6C6D /* Student.m in Sources */,
 				6361E1101DAD356F00A54376 /* CourseDetailViewController.m in Sources */,
-				634B4E441DB012B500FEC690 /* EnrolledCourse.m in Sources */,
 				63B75F291DACC9210060C401 /* Course.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

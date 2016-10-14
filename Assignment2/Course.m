@@ -18,6 +18,9 @@
         self.hWeight = homework;
         self.mWeight = midterm;
         self.fWeight = final;
+        self.hScore = 0;
+        self.mScore = 0;
+        self.fScore = 0;
         
         if (self.courseName == nil || self.hWeight < 0 || self.hWeight > 100
             || self.mWeight < 0 || self.mWeight > 100
@@ -39,4 +42,17 @@
                         self.hWeight, self.mWeight, self.fWeight];
     return output;
 }
+
+-(void) setHomeworkScore: (float) hScore midtermScore: (float) mScore finalScore: (float) fScore {
+    self.hScore = hScore;
+    self.mScore = mScore;
+    self.fScore = fScore;
+}
+
+-(NSString*) getScores {
+    NSString *output = [NSString stringWithFormat:@"Homework: %.2f Midterm: %.2f Final: %.2f",
+                        self.hScore, self.mScore, self.fScore];
+    return output;
+}
+
 @end

@@ -44,11 +44,11 @@
     Course *c2 = [Course newCourse:@"CPSC456" hWeight:35 mWeight:35 fWeight:30];
     
     // Add some course
-    [s1.enrolledCourses addObject:(EnrolledCourse*) c1];
-    [s1.enrolledCourses addObject:(EnrolledCourse*) c2];
+    [s1.enrolledCourses addObject: c1];
+    [s1.enrolledCourses addObject: c2];
     
-    [s2.enrolledCourses addObject:(EnrolledCourse*) c2];
-    [s3.enrolledCourses addObject:(EnrolledCourse*) c1];
+    [s2.enrolledCourses addObject: c2];
+    [s3.enrolledCourses addObject: c1];
 }
 
 // MARK: UITableView Data Source

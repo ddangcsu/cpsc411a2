@@ -49,6 +49,7 @@
     } else {
         // Enable Edit Button item
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
+        
     }
     
     [self createDemoCourseList];
@@ -83,17 +84,6 @@
 }
                                          
 // MARK: TableView Delegation
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Cell selected at row %ld", indexPath.row);
-}
-
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Cell unselected at row %ld", indexPath.row);
-}
-
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Accessory selected for row %ld", indexPath.row);
-}
 
 // MARK: TableView Data Sources
 
@@ -196,6 +186,7 @@
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSLog(@"prepareForSegue: segue id is %@", segue.identifier);
     NSLog(@"Sender is of type: %@", [sender class]);
+    NSLog(@"Destination is : %@", [segue.destinationViewController class]);
     
     // We want to see which segue was used to navigate
     if ([segue.identifier isEqualToString:@"addCourse"]) {
@@ -214,6 +205,19 @@
         
         // We pass data to detailVC
         destinationVC.aCourse = self.courseList[self.selectedIndexPath.row];
+        
+    } else if ([segue.identifier isEqualToString:@"enrollSelectedCourses"]) {
+        NSLog(@"We want to enrolled the selected courses");
+        NSArray* selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
+        self.enrolledCourses = [[NSMutableArray alloc] init];
+        
+        NSLog(@"Selected index are: %@", selectedIndexPaths);
+        for(NSIndexPath *path in selectedIndexPaths) {
+            Course *course = self.courseList[path.row];
+            [self.enrolledCourses addObject: course];
+        }
+        
+        
     }
 }
 

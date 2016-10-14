@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *textFieldLastName;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldCWID;
 @property (weak, nonatomic) IBOutlet UILabel *labelError;
+@property (weak, nonatomic) IBOutlet UITableView *enrolledCoursesView;
+
+@property (strong, nonatomic) NSMutableArray<Course*> *enrolledCourses;
 
 // MARK: Actions
 - (IBAction)cancelStudentDetail:(id)sender;
@@ -41,11 +44,19 @@
         self.textFieldFirstName.text = self.aStudent.firstName;
         self.textFieldLastName.text = self.aStudent.lastName;
         self.textFieldCWID.text = self.aStudent.CWID;
+        
+        self.enrolledCourses = self.aStudent.enrolledCourses;
+        
+        for (Course* course in self.enrolledCourses) {
+            NSLog(@"Course Enrolled: %@", course.courseName);
+            NSLog(@"Course Weight: %@", course.getWeights);
+            NSLog(@"Course Scores: %@", course.getScores);
+        }
+        
     } else {
         self.navigationItem.title = @"Add Student";
+        self.enrolledCourses = [[NSMutableArray alloc]init];
     }
-    
-    NSLog(@"Adding New Student");
     
 }
 
@@ -61,22 +72,37 @@
 }
 
 // MARK: TableView Delegation
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Remove the data from model
+        NSLog(@"Edit Style is Style Delete Row");
+        [self.enrolledCourses removeObjectAtIndex:indexPath.row];
+        
+        // Refresh the view
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+
+}
 
 // MARK: TableView DataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 0;
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of enrolled Courses
-    return self.aStudent.enrolledCourses.count;
+    return self.enrolledCourses.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* cellId = @"enrolledCourceCell";
+    NSString* cellId = @"enrolledCourseCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
     
-    EnrolledCourse* course = self.aStudent.enrolledCourses[indexPath.row];
+    Course* course = self.enrolledCourses[indexPath.row];
     
     cell.textLabel.text = course.courseName;
     cell.detailTextLabel.text = [course getScores];
@@ -100,6 +126,7 @@
         
         // Create the student object
         self.aStudent = [Student newStudentFirstName:first lastName:last andCWID:cwid];
+        self.aStudent.enrolledCourses = self.enrolledCourses;
         
     } else if ([segue.identifier isEqualToString: @"enrollCourses"]) {
         NSLog(@"We are trying to enroll courses");
@@ -111,6 +138,21 @@
 // Method when unwind from Selected Course List
 -(void)unwindFromSelectedCourseList:(UIStoryboardSegue *)segue {
     NSLog(@"Unwinded from Course List");
+    
+    // Get enrolled Courses from sourceVC
+    CoursesViewController* enrolledVC = segue.sourceViewController;
+    
+    if (enrolledVC.enrolledCourses.count > 0) {
+        // Add the enrolled courses to the student enrolled Courses
+        for (Course *course in enrolledVC.enrolledCourses) {
+            // Find the current view row
+            NSIndexPath *enrolledIndex = [NSIndexPath indexPathForRow:self.enrolledCourses.count inSection: 0];
+            // Add data to source
+            [self.enrolledCourses addObject:course];
+            // Insert rows into view
+            [self.enrolledCoursesView insertRowsAtIndexPaths:@[enrolledIndex] withRowAnimation:UITableViewRowAnimationRight];
+        }
+    }
 }
 
 //MARK: Actions

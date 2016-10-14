@@ -15,6 +15,9 @@
 @property (assign, nonatomic) float hWeight;
 @property (assign, nonatomic) float mWeight;
 @property (assign, nonatomic) float fWeight;
+@property (assign, nonatomic) float hScore;
+@property (assign, nonatomic) float mScore;
+@property (assign, nonatomic) float fScore;
 
 // MARK: Methods
 -(instancetype) initWithName: (NSString*) name
@@ -27,6 +30,11 @@
                   mWeight: (float) midterm
                   fWeight: (float) final;
 
+-(void) setHomeworkScore: (float) hScore
+            midtermScore: (float) mScore
+              finalScore: (float) fScore;
+
+-(NSString*) getScores;
 -(NSString*) getWeights;
 
 @end
