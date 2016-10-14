@@ -16,9 +16,16 @@
 // MARK: UIProperties
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 
+// MARK: Utilities Methods
+-(void) loadDemoCourseList;
+
 // MARK: UIActions
--(void) createDemoCourseList;
--(void) enrollSelectedCourses;
+-(void) enrollSelectedCoursesButton;
+
+// MARK: Archiving methods
+-(BOOL) archivedCourseLists;
+-(NSMutableArray<Course*>*) loadCourseLists;
+-(NSMutableArray<Course*>*) loadCoursesExcluding: (NSMutableArray<Course*>*) excludeCourses;
 
 @end
 
@@ -30,13 +37,25 @@
 
     NSLog(@"We were invoked by segue %@", self.segueIdentifier);
     
+    // We need to retrieve model data
+    if (self.enrolledCourses == nil) {
+        self.courseList = [self loadCourseLists];
+    } else {
+        self.courseList = [self loadCoursesExcluding:self.enrolledCourses];
+    }
+    
+    // If we still get an empty set, we will load our demo courses
+    if (self.courseList == nil) {
+        [self loadDemoCourseList];
+    }
+    
     if ([self.segueIdentifier isEqualToString:@"enrollCourses"]) {
         // Prepare the view to show the course appropriately for enrolling
         
         // We removed the left bar button and add a custom enroll button
         UIBarButtonItem *enrollButton = [[UIBarButtonItem alloc]
                                          initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                         target:self action:@selector(enrollSelectedCourses)];
+                                         target:self action:@selector(enrollSelectedCoursesButton)];
                                          
         self.navigationItem.rightBarButtonItem = enrollButton;
         self.navigationItem.leftBarButtonItem = nil;
@@ -49,10 +68,8 @@
     } else {
         // Enable Edit Button item
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
-        
     }
     
-    [self createDemoCourseList];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,7 +77,8 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void) createDemoCourseList {
+/* Function to create and load some Demo courses information */
+-(void) loadDemoCourseList {
     
     if (self.courseList == nil) {
         self.courseList = [[NSMutableArray alloc]init];
@@ -77,12 +95,47 @@
     
 }
 
--(void) enrollSelectedCourses {
+/* UIAction method to enrolled the list of selected courses when user click on 
+   the enrolled button */
+-(void) enrollSelectedCoursesButton {
     NSLog(@"Button enroll Selected Course");
     NSString *segueId = @"enrollSelectedCourses";
     [self performSegueWithIdentifier:segueId sender: self.navigationItem.rightBarButtonItem];
 }
-                                         
+
+// MARK: Archiving methods
+
+/* Function to save the course lists to file */
+-(BOOL) archivedCourseLists {
+    BOOL isArchived = NO;
+    NSString *path = [Course getArchivePath].path;
+    isArchived = [NSKeyedArchiver archiveRootObject:self.courseList toFile:path];
+    
+    if (! isArchived ) {
+        NSLog(@"Unable to save Course Lists");
+        return NO;
+    }
+    return YES;
+}
+
+/* Function to return the list of courses from file */
+-(NSMutableArray<Course*>*) loadCourseLists {
+    NSString *path = [Course getArchivePath].path;
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+}
+
+/* Function to return the list of courses from file excluding the excluded list */
+-(NSMutableArray<Course*>*) loadCoursesExcluding: (NSMutableArray<Course*>*) excludeCourses {
+
+    NSMutableArray<Course*> *fromFile = [self loadCourseLists];
+    if (excludeCourses.count > 0) {
+        for (Course *course in excludeCourses) {
+            [fromFile removeObject:course];
+        }
+    }
+    return fromFile;
+}
+
 // MARK: TableView Delegation
 
 // MARK: TableView Data Sources
@@ -176,6 +229,10 @@
             // Then we tell the tableView to update its view
             [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
         }
+        
+        if (! [self archivedCourseLists]) {
+            NSLog(@"Unable to archived course list data");
+        }
     } else {
         NSLog(@"Unable to retrieve data from detail course");
     }
@@ -216,8 +273,6 @@
             Course *course = self.courseList[path.row];
             [self.enrolledCourses addObject: course];
         }
-        
-        
     }
 }
 

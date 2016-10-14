@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Course : NSObject
+@interface Course : NSObject <NSCoding>
 
 // MARK: Properties
 @property (strong, nonatomic) NSString *courseName;
@@ -36,5 +36,6 @@
 
 -(NSString*) getScores;
 -(NSString*) getWeights;
++(NSURL*) getArchivePath;
 
 @end

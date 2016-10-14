@@ -10,6 +10,45 @@
 
 @implementation Course
 
+// MARK: NSCoding
+static NSString* nameKey = @"courseName";
+static NSString* hWeightKey = @"hWeight";
+static NSString* mWeightKey = @"mWeight";
+static NSString* fWeightKey = @"fWeight";
+static NSString* hScoreKey  = @"hScore";
+static NSString* mScoreKey  = @"mScore";
+static NSString* fScoreKey  = @"fScore";
+
+-(instancetype)initWithCoder:(NSCoder *)aDecoder {
+    NSString *name = [aDecoder decodeObjectForKey:nameKey];
+    float hWeight =[aDecoder decodeFloatForKey:hWeightKey];
+    float mWeight =[aDecoder decodeFloatForKey:mWeightKey];
+    float fWeight =[aDecoder decodeFloatForKey:fWeightKey];
+    float hScore =[aDecoder decodeFloatForKey:hScoreKey];
+    float mScore =[aDecoder decodeFloatForKey:mScoreKey];
+    float fScore =[aDecoder decodeFloatForKey:fScoreKey];
+    
+    self = [self initWithName:name hWeight:hWeight mWeight:mWeight fWeight:fWeight];
+    [self setHomeworkScore:hScore midtermScore:mScore finalScore:fScore];
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject: self.courseName forKey: nameKey];
+    [aCoder encodeFloat:self.hWeight forKey:hWeightKey];
+    [aCoder encodeFloat:self.mWeight forKey:hWeightKey];
+    [aCoder encodeFloat:self.fWeight forKey:fWeightKey];
+    [aCoder encodeFloat:self.hScore forKey:hScoreKey];
+    [aCoder encodeFloat:self.mScore forKey:mScoreKey];
+    [aCoder encodeFloat:self.fScore forKey:fScoreKey];
+}
+
++(NSURL*) getArchivePath {
+    NSURL* archivePath = [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] firstObject]URLByAppendingPathComponent:@"Assignment2Course"];
+    return archivePath;
+}
+
+// MARK: Initialization
 -(instancetype) initWithName: (NSString*) name hWeight: (float) homework
                      mWeight: (float) midterm fWeight: (float) final {
     self = [super init];
@@ -37,6 +76,17 @@
     return [[self alloc] initWithName:name hWeight:homework mWeight:midterm fWeight:final];
 }
 
+// MARK: Override methods
+-(BOOL)isEqual:(Course*) object {
+    return (
+        [self.courseName isEqualToString: object.courseName] &&
+            self.hWeight == object.hWeight &&
+            self.mWeight == object.mWeight &&
+            self.fWeight == object.fWeight
+    );
+}
+
+// MARK: Methods and Actions
 -(NSString*) getWeights {
     NSString *output = [NSString stringWithFormat:@"hWeight: %.2f mWeight: %.2f fWeight: %.2f",
                         self.hWeight, self.mWeight, self.fWeight];
