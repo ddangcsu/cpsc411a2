@@ -35,7 +35,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 
-    NSLog(@"We were invoked by segue %@", self.segueIdentifier);
+    // NSLog(@"We were invoked by segue %@", self.segueIdentifier);
     
     // We need to retrieve model data
     if (self.enrolledCourses == nil) {
@@ -59,7 +59,7 @@
                                          
         self.navigationItem.rightBarButtonItem = enrollButton;
         self.navigationItem.leftBarButtonItem = nil;
-        self.navigationItem.title = @"Enroll Courses";
+        self.navigationItem.title = @"Choose To Enroll";
         
         // We enable tableView in edit mode and allow multiple selections
         [self.tableView setAllowsMultipleSelectionDuringEditing:YES];
@@ -181,8 +181,13 @@
     // User select Edit and choose Delete on a cell
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Remove the data from model
-        NSLog(@"Edit Style is Style Delete Row");
+        // NSLog(@"Edit Style is Style Delete Row");
         [self.courseList removeObjectAtIndex:indexPath.row];
+        
+        // Save data
+        if ( ! [self archivedCourseLists] ) {
+            NSLog(@"Unable to save course data");
+        }
         
         // Refresh the view
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -194,7 +199,7 @@
 // Use the method below to allow to unwind data back from Course Detail View
 -(IBAction) unwindFromCourseDetail: (UIStoryboardSegue*) segue {
 
-    NSLog(@"UnwindFromCourseDetail:  segue id is %@", segue.identifier);
+    // NSLog(@"UnwindFromCourseDetail:  segue id is %@", segue.identifier);
     
     // Get the View Controller where the data is unwind from
     CourseDetailViewController* detailVC = segue.sourceViewController;
@@ -209,7 +214,7 @@
     if (returnCourse) {
         if (self.selectedIndexPath) {
             // We get data from Editing existing course at specific row
-            NSLog(@"We are updating an existing course");
+            // NSLog(@"We are updating an existing course");
             
             // We replace the course data at specified row with the data received
             self.courseList[self.selectedIndexPath.row] = returnCourse;
@@ -219,7 +224,7 @@
             
         } else {
             // We get data from Adding a new row
-            NSLog(@"We are adding a new course");
+            // NSLog(@"We are adding a new course");
             // Get the tableView index path
             NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:self.courseList.count inSection:0];
             
@@ -241,18 +246,18 @@
 // Message to prepare the segue for a given sender before navigate off the current
 // view controller
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSLog(@"prepareForSegue: segue id is %@", segue.identifier);
-    NSLog(@"Sender is of type: %@", [sender class]);
-    NSLog(@"Destination is : %@", [segue.destinationViewController class]);
+    //NSLog(@"prepareForSegue: segue id is %@", segue.identifier);
+    //NSLog(@"Sender is of type: %@", [sender class]);
+    //NSLog(@"Destination is : %@", [segue.destinationViewController class]);
     
     // We want to see which segue was used to navigate
     if ([segue.identifier isEqualToString:@"addCourse"]) {
         // The user hit the add button
-        NSLog(@"We want to add a new course");
+        //NSLog(@"We want to add a new course");
         self.selectedIndexPath = nil;
         
     } else if ([segue.identifier isEqualToString:@"editCourse"]) {
-        NSLog(@"We want to edit an existing course");
+        // NSLog(@"We want to edit an existing course");
         // We use this to pass data forward to the CourseDetailViewController
         CourseDetailViewController *destinationVC = segue.destinationViewController;
         
@@ -264,11 +269,11 @@
         destinationVC.aCourse = self.courseList[self.selectedIndexPath.row];
         
     } else if ([segue.identifier isEqualToString:@"enrollSelectedCourses"]) {
-        NSLog(@"We want to enrolled the selected courses");
+        // NSLog(@"We want to enrolled the selected courses");
         NSArray* selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
         self.enrolledCourses = [[NSMutableArray alloc] init];
         
-        NSLog(@"Selected index are: %@", selectedIndexPaths);
+        // NSLog(@"Selected index are: %@", selectedIndexPaths);
         for(NSIndexPath *path in selectedIndexPaths) {
             Course *course = self.courseList[path.row];
             [self.enrolledCourses addObject: course];

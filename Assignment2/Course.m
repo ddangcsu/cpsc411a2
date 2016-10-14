@@ -36,7 +36,7 @@ static NSString* fScoreKey  = @"fScore";
 -(void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject: self.courseName forKey: nameKey];
     [aCoder encodeFloat:self.hWeight forKey:hWeightKey];
-    [aCoder encodeFloat:self.mWeight forKey:hWeightKey];
+    [aCoder encodeFloat:self.mWeight forKey:mWeightKey];
     [aCoder encodeFloat:self.fWeight forKey:fWeightKey];
     [aCoder encodeFloat:self.hScore forKey:hScoreKey];
     [aCoder encodeFloat:self.mScore forKey:mScoreKey];
