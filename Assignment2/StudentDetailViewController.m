@@ -18,11 +18,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelError;
 @property (weak, nonatomic) IBOutlet UITableView *enrolledCoursesView;
 
+// This property is to temporary hold the enrollCourses while adding/editing
 @property (strong, nonatomic) NSMutableArray<Course*> *enrolledCourses;
 
-// MARK: Actions
+// MARK: UIActions
 - (IBAction)cancelStudentDetail:(id)sender;
 - (IBAction)validateToSave:(UIButton *)sender;
+
+// MARK: Utilities
 - (BOOL) validateDataInput;
 
 @end
@@ -38,7 +41,7 @@
     
     // Populate the data if it's an edit
     if (self.aStudent != nil) {
-        NSLog(@"Editing Student");
+//        NSLog(@"Editing Student");
         self.navigationItem.title = @"Edit Student";
         // We got data for editing.  Update the view.
         self.textFieldFirstName.text = self.aStudent.firstName;
@@ -89,6 +92,12 @@
 }
 
 // MARK: TableView DataSource
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    // We set the title for the enroll Course table view
+    NSString *title = @"Enrolled Courses";
+    return title;
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -117,7 +126,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if (sender == self.saveButton) {
-        NSLog(@"Save Student Data.  Pass it back");
+        // NSLog(@"Save Student Data.  Pass it back");
         
         // Retrieve data
         NSString *first = [self.textFieldFirstName.text capitalizedString];
@@ -129,28 +138,37 @@
         self.aStudent.enrolledCourses = self.enrolledCourses;
         
     } else if ([segue.identifier isEqualToString: @"enrollCourses"]) {
-        NSLog(@"We are trying to enroll courses");
+        // NSLog(@"We are trying to enroll courses");
+        // Get the Course Listing View Controller
         CoursesViewController *courseListVC = [segue destinationViewController];
+        
+        // We pass the identifier so that CourseList view Controller can determine
+        // whether to toggle edit mode with select only
         courseListVC.segueIdentifier = segue.identifier;
+        
+        // We also pass the current enrolled Courses so that the list will be filtered
+        // and only display courses that we have not register yet.
         courseListVC.enrolledCourses = self.enrolledCourses;
     }
 }
 
 // Method when unwind from Selected Course List
 -(void)unwindFromSelectedCourseList:(UIStoryboardSegue *)segue {
-    NSLog(@"Unwinded from Course List");
+    // NSLog(@"Unwinded from Course List");
     
     // Get enrolled Courses from sourceVC
     CoursesViewController* enrolledVC = segue.sourceViewController;
     
     if (enrolledVC.enrolledCourses.count > 0) {
-        // Add the enrolled courses to the student enrolled Courses
+        // Add the selected courses to the temporary enrolled Courses array
         for (Course *course in enrolledVC.enrolledCourses) {
-            // Find the current view row
+            // Get the current number of rows availables
             NSIndexPath *enrolledIndex = [NSIndexPath indexPathForRow:self.enrolledCourses.count inSection: 0];
-            // Add data to source
+            
+            // Add data to the temporary enrolled Courses array
             [self.enrolledCourses addObject:course];
-            // Insert rows into view
+            
+            // Tell the tableView to refresh data at the given index.
             [self.enrolledCoursesView insertRowsAtIndexPaths:@[enrolledIndex] withRowAnimation:UITableViewRowAnimationRight];
         }
     }
@@ -178,6 +196,7 @@
     self.saveButton.enabled = [self validateDataInput];
 }
 
+// MARK: Utilities
 // Util Function to validate the data
 -(BOOL) validateDataInput {
     // Hide keyboard

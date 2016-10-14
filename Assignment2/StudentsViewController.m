@@ -10,6 +10,11 @@
 
 @interface StudentsViewController ()
 @property (nonatomic, strong) NSMutableArray<Student*> *studentList;
+
+// MARK: Archiving methods
+-(BOOL) archivedStudentLists;
+-(NSMutableArray<Student*>*) loadStudentLists;
+
 @end
 
 @implementation StudentsViewController
@@ -18,7 +23,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    [self getDemoStudents];
+    if (self.studentList == nil) {
+        self.studentList = [self loadStudentLists];
+    }
+    
+    if (self.studentList == nil) {
+	    [self getDemoStudents];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,6 +62,27 @@
     [s3.enrolledCourses addObject: c1];
 }
 
+// MARK: Archiving methods
+
+/* Function to save the student lists to file */
+-(BOOL) archivedStudentLists {
+    BOOL isArchived = NO;
+    NSString *path = [Student getArchivePath].path;
+    isArchived = [NSKeyedArchiver archiveRootObject:self.studentList toFile:path];
+    
+    if (! isArchived ) {
+        NSLog(@"Unable to save Student Lists");
+        return NO;
+    }
+    return YES;
+}
+
+/* Function to return the list of student from file */
+-(NSMutableArray<Student*>*) loadStudentLists {
+    NSString *path = [Student getArchivePath].path;
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+}
+
 // MARK: UITableView Data Source
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
@@ -60,6 +92,11 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the entry from Model
         [self.studentList removeObjectAtIndex:indexPath.row];
+        
+        // Archive it
+        if (! [self archivedStudentLists]) {
+            NSLog(@"Something went wrong with archive student list");
+        }
         
         // Refresh view
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -98,7 +135,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"addStudent"]) {
-        NSLog(@"We are about to add a new student");
+        // NSLog(@"We are about to add a new student");
         
     } else if ([segue.identifier isEqualToString:@"editStudent"]) {
         // Get the destination view controller
@@ -128,7 +165,7 @@
     if (aStudent) {
         if (selectedIndexPath) {
             // We get data from Editing existing course at specific row
-            NSLog(@"We are updating an existing student");
+            //NSLog(@"We are updating an existing student");
             
             // We replace the course data at specified row with the data received
             self.studentList[selectedIndexPath.row] = aStudent;
@@ -138,7 +175,7 @@
             
         } else {
             // We get data from Adding a new row
-            NSLog(@"We are adding a new student");
+            //NSLog(@"We are adding a new student");
             // Get the tableView index path
             NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:self.studentList.count inSection:0];
             
@@ -148,6 +185,11 @@
             // Then we tell the tableView to update its view
             [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
         }
+        // Archive it
+        if (! [self archivedStudentLists]) {
+            NSLog(@"Something went wrong with archive student list");
+        }
+        
     } else {
         NSLog(@"Unable to retrieve data from detail student");
     }

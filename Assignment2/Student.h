@@ -21,4 +21,6 @@
 -(NSString*) fullName;
 +(NSURL*) getArchivePath;
 
+-(BOOL)isEqual:(Student*) object;
+
 @end

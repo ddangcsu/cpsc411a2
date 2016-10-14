@@ -98,7 +98,7 @@
 /* UIAction method to enrolled the list of selected courses when user click on 
    the enrolled button */
 -(void) enrollSelectedCoursesButton {
-    NSLog(@"Button enroll Selected Course");
+    // NSLog(@"Button enroll Selected Course");
     NSString *segueId = @"enrollSelectedCourses";
     [self performSegueWithIdentifier:segueId sender: self.navigationItem.rightBarButtonItem];
 }
