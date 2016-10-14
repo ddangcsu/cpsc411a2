@@ -47,11 +47,11 @@
         
         self.enrolledCourses = self.aStudent.enrolledCourses;
         
-        for (Course* course in self.enrolledCourses) {
-            NSLog(@"Course Enrolled: %@", course.courseName);
-            NSLog(@"Course Weight: %@", course.getWeights);
-            NSLog(@"Course Scores: %@", course.getScores);
-        }
+//        for (Course* course in self.enrolledCourses) {
+//            NSLog(@"Course Enrolled: %@", course.courseName);
+//            NSLog(@"Course Weight: %@", course.getWeights);
+//            NSLog(@"Course Scores: %@", course.getScores);
+//        }
         
     } else {
         self.navigationItem.title = @"Add Student";
@@ -132,6 +132,7 @@
         NSLog(@"We are trying to enroll courses");
         CoursesViewController *courseListVC = [segue destinationViewController];
         courseListVC.segueIdentifier = segue.identifier;
+        courseListVC.enrolledCourses = self.enrolledCourses;
     }
 }
 

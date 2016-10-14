@@ -38,4 +38,7 @@
 -(NSString*) getWeights;
 +(NSURL*) getArchivePath;
 
+// MARK: Override methods
+-(BOOL)isEqual:(Course*) object;
+
 @end
