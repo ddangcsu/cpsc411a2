@@ -266,6 +266,10 @@
         return NO;
     }
     
+    if (self.enrolledCourses.count < 1) {
+        self.labelError.text = @"Remember to enroll class";
+    }
+    
     // If we get here, it means it's good
     return YES;
 }

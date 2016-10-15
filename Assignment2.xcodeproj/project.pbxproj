@@ -18,6 +18,7 @@
 		63B75F291DACC9210060C401 /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B75F281DACC9210060C401 /* Course.m */; };
 		63D519C41DAEB7E500DE6C6D /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D519C31DAEB7E500DE6C6D /* Student.m */; };
 		63D519C71DAF12A300DE6C6D /* StudentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D519C61DAF12A300DE6C6D /* StudentDetailViewController.m */; };
+		63EAA3231DB1DB75006D4A36 /* CourseScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA3221DB1DB75006D4A36 /* CourseScoreViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,8 @@
 		63D519C31DAEB7E500DE6C6D /* Student.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Student.m; sourceTree = "<group>"; };
 		63D519C51DAF12A300DE6C6D /* StudentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentDetailViewController.h; sourceTree = "<group>"; };
 		63D519C61DAF12A300DE6C6D /* StudentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentDetailViewController.m; sourceTree = "<group>"; };
+		63EAA3211DB1DB75006D4A36 /* CourseScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseScoreViewController.h; sourceTree = "<group>"; };
+		63EAA3221DB1DB75006D4A36 /* CourseScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseScoreViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +119,8 @@
 				63B75F151DABF74A0060C401 /* StudentsViewController.m */,
 				63D519C51DAF12A300DE6C6D /* StudentDetailViewController.h */,
 				63D519C61DAF12A300DE6C6D /* StudentDetailViewController.m */,
+				63EAA3211DB1DB75006D4A36 /* CourseScoreViewController.h */,
+				63EAA3221DB1DB75006D4A36 /* CourseScoreViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 			files = (
 				63B75F161DABF74A0060C401 /* StudentsViewController.m in Sources */,
 				63D519C71DAF12A300DE6C6D /* StudentDetailViewController.m in Sources */,
+				63EAA3231DB1DB75006D4A36 /* CourseScoreViewController.m in Sources */,
 				63B75F101DABF74A0060C401 /* AppDelegate.m in Sources */,
 				63B75F131DABF74A0060C401 /* CoursesViewController.m in Sources */,
 				63B75F0D1DABF74A0060C401 /* main.m in Sources */,
