@@ -282,8 +282,8 @@
         [self.textFieldLastName becomeFirstResponder];
         return NO;
     }
-    if (cwid.length <= 0) {
-        self.labelError.text = @"CWID is required";
+    if (cwid.length <= 0 || cwid.length > 9) {
+        self.labelError.text = @"CWID must be 9 digits";
         [self.textFieldCWID becomeFirstResponder];
         return NO;
     }
