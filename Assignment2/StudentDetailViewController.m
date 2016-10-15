@@ -24,6 +24,7 @@
 // MARK: UIActions
 - (IBAction)cancelStudentDetail:(id)sender;
 - (IBAction)validateToSave:(UIButton *)sender;
+-(void) performEnrollCourse:(id) sender;
 
 // MARK: Utilities
 - (BOOL) validateDataInput;
@@ -100,13 +101,37 @@
 
 }
 
-// MARK: TableView DataSource
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    // We set the title for the enroll Course table view
-    NSString *title = @"Enrolled Courses";
-    return title;
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    // Create a toolbar and tell it to autosize itself
+    UIToolbar* toolBar = [[UIToolbar alloc]init];
+    [toolBar sizeToFit];
+    
+    // Create an Add Button of type UIBarButtonItem and tell it to invoke the method
+    // performEnrollCourse defined on this View Controller
+    UIBarButtonItem* addButton = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                  target:self action:@selector(performEnrollCourse:)];
+    // Create a UIBarButtonItem as a spacer
+    UIBarButtonItem* flexSpace = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                  target:nil action:nil];
+    // Create a UIView Label so that we can create the title text on it
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0,0,150,20)];
+    title.text = @"Enrolled Courses";
+    
+    // We Create another UIBarButtonItem using the UILabel we just created
+    UIBarButtonItem* titleSpace = [[UIBarButtonItem alloc] initWithCustomView:title];
+    
+    // We put all the items on the toolBar in the order that we wanted
+    // Title <space> Add Button
+    toolBar.items = @[titleSpace, flexSpace, addButton];
+    
+    // We return the toolBar (which is a UIView and let the tableView draw it
+    // In the header section
+    return toolBar;
 }
 
+// MARK: TableView DataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -203,6 +228,13 @@
 - (IBAction)validateToSave:(UIButton *)sender {
     // Validate the Input and turn on/off the save button
     self.saveButton.enabled = [self validateDataInput];
+}
+
+-(void) performEnrollCourse: (UIBarButtonItem*) sender {
+    // NSLog(@"Button click %@", sender);
+    // Tell the View controller to perform the Manual Segue with teh Identifier of enrollCourses
+    [self performSegueWithIdentifier:@"enrollCourses" sender:sender];
+    
 }
 
 // MARK: Utilities

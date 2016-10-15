@@ -366,9 +366,6 @@
                                     <constraint firstAttribute="width" constant="122" id="lz9-OT-7Cy"/>
                                 </constraints>
                                 <state key="normal" title="Enroll Courses"/>
-                                <connections>
-                                    <segue destination="9pv-A4-QxB" kind="show" identifier="enrollCourses" id="k8d-3t-Kyn"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M1n-CI-pEr">
                                 <rect key="frame" x="20" y="235" width="122" height="30"/>
@@ -473,6 +470,7 @@
                         <outlet property="textFieldCWID" destination="yhT-zg-YH0" id="gO2-EJ-thc"/>
                         <outlet property="textFieldFirstName" destination="l3G-Z3-JKt" id="sUs-AF-xfx"/>
                         <outlet property="textFieldLastName" destination="8aY-6g-eI2" id="j9H-v9-LoP"/>
+                        <segue destination="9pv-A4-QxB" kind="show" identifier="enrollCourses" id="v4X-ST-FMl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFP-8B-Pnk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -579,8 +577,8 @@
         <image name="students" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="k8d-3t-Kyn"/>
         <segue reference="G4c-2R-N3N"/>
+        <segue reference="v4X-ST-FMl"/>
         <segue reference="iYk-mH-9RL"/>
     </inferredMetricsTieBreakers>
 </document>
