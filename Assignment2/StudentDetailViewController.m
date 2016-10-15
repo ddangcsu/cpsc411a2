@@ -8,6 +8,7 @@
 
 #import "StudentDetailViewController.h"
 #import "CoursesViewController.h"
+#import "CourseScoreViewController.h"
 
 @interface StudentDetailViewController ()
 // MARK: UI Properties
@@ -28,7 +29,6 @@
 
 // MARK: Utilities
 - (BOOL) validateDataInput;
-- (void) addDoneButton: (UITextField*) field;
 
 @end
 
@@ -79,7 +79,7 @@
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     // Add custom Done button to numeric keypad
     if (textField == self.textFieldCWID) {
-        [self addDoneButton:textField];
+        [Utilities addDoneButtonToKeyPad:textField inView:self.view];
     }
     return YES;
 }
@@ -183,6 +183,14 @@
         // We also pass the current enrolled Courses so that the list will be filtered
         // and only display courses that we have not register yet.
         courseListVC.enrolledCourses = self.enrolledCourses;
+        
+    } else if ([segue.identifier isEqualToString:@"editCourseScore"]) {
+		// Get the Destination View Controller
+        CourseScoreViewController *destinationVC = [segue destinationViewController];
+        // Retrieve the Index for the selected Cell
+        NSIndexPath *selectedIndexPath = [self.enrolledCoursesView indexPathForCell:sender];
+        // Pass the course data to the Score Editing View
+        destinationVC.aCourse = self.enrolledCourses[selectedIndexPath.row];
     }
 }
 
@@ -208,6 +216,20 @@
     }
 }
 
+-(IBAction) unwindFromCourseScore:(UIStoryboardSegue *)segue {
+    // Update the Score
+    CourseScoreViewController *scoreVC = segue.sourceViewController;
+    Course *course = scoreVC.aCourse;
+    
+    // Find out the cell that it was updated
+    NSIndexPath *selectedIndexPath = self.enrolledCoursesView.indexPathForSelectedRow;
+    if (selectedIndexPath) {
+        self.enrolledCourses[selectedIndexPath.row] = course;
+        [self.enrolledCoursesView reloadRowsAtIndexPaths:@[selectedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    scoreVC = nil;
+    course = nil;
+}
 //MARK: Actions
 
 - (IBAction)cancelStudentDetail:(id)sender {
@@ -272,26 +294,6 @@
     
     // If we get here, it means it's good
     return YES;
-}
-
-// MARK: Support Functions
--(void) addDoneButton: (UITextField*) field {
-    // We create a Tool Bar and tell it to auto size
-    UIToolbar *toolBar = [[UIToolbar alloc] init];
-    [toolBar sizeToFit];
-    
-    // We create a FlexibleSpace to fill and push the Done button to the right for us
-    UIBarButtonItem *flexBar = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    // We create a Done button.  We set the target to the view so that it can call
-    // the delegate endEditing method
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self.view action:@selector(endEditing:)];
-    
-    // We add the two buttons into the toolBar
-    toolBar.items = @[flexBar, doneButton];
-    
-    // We add it to the field's Input AccesoryView
-    field.inputAccessoryView = toolBar;
 }
 
 @end

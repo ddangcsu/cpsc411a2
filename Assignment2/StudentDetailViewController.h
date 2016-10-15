@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Student.h"
+#import "Utilities.h"
 
 @interface StudentDetailViewController : UIViewController
 <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -17,5 +18,6 @@
 
 // MARK: Unwind segue for enroll courses
 -(IBAction) unwindFromSelectedCourseList: (UIStoryboardSegue*) segue;
+-(IBAction) unwindFromCourseScore: (UIStoryboardSegue*) segue;
 
 @end

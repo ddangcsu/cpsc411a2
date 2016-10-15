@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Course.h"
+#import "Utilities.h"
 
 @interface CourseDetailViewController : UIViewController <UITextFieldDelegate>
 // MARK: Properties to pass data back and forth

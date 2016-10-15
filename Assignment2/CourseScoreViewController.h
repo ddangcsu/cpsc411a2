@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Course.h"
+#import "Utilities.h"
 
-@interface CourseScoreViewController : UIViewController
+@interface CourseScoreViewController : UIViewController <UITextFieldDelegate>
+// MARK: Properties to pass between VC
+@property (strong, nonatomic) Course *aCourse;
 
 @end

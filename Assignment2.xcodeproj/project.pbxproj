@@ -19,6 +19,7 @@
 		63D519C41DAEB7E500DE6C6D /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D519C31DAEB7E500DE6C6D /* Student.m */; };
 		63D519C71DAF12A300DE6C6D /* StudentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D519C61DAF12A300DE6C6D /* StudentDetailViewController.m */; };
 		63EAA3231DB1DB75006D4A36 /* CourseScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA3221DB1DB75006D4A36 /* CourseScoreViewController.m */; };
+		63EAA3271DB1F008006D4A36 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA3261DB1F008006D4A36 /* Utilities.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,8 @@
 		63D519C61DAF12A300DE6C6D /* StudentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentDetailViewController.m; sourceTree = "<group>"; };
 		63EAA3211DB1DB75006D4A36 /* CourseScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseScoreViewController.h; sourceTree = "<group>"; };
 		63EAA3221DB1DB75006D4A36 /* CourseScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseScoreViewController.m; sourceTree = "<group>"; };
+		63EAA3251DB1F008006D4A36 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		63EAA3261DB1F008006D4A36 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +79,7 @@
 		63B75F0A1DABF74A0060C401 /* Assignment2 */ = {
 			isa = PBXGroup;
 			children = (
+				63EAA3241DB1EFDA006D4A36 /* Utilities */,
 				63B75F261DABF9810060C401 /* Controllers */,
 				63B75F251DABF97A0060C401 /* Models */,
 				63B75F0E1DABF74A0060C401 /* AppDelegate.h */,
@@ -123,6 +127,15 @@
 				63EAA3221DB1DB75006D4A36 /* CourseScoreViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		63EAA3241DB1EFDA006D4A36 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				63EAA3251DB1F008006D4A36 /* Utilities.h */,
+				63EAA3261DB1F008006D4A36 /* Utilities.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +213,7 @@
 				63D519C71DAF12A300DE6C6D /* StudentDetailViewController.m in Sources */,
 				63EAA3231DB1DB75006D4A36 /* CourseScoreViewController.m in Sources */,
 				63B75F101DABF74A0060C401 /* AppDelegate.m in Sources */,
+				63EAA3271DB1F008006D4A36 /* Utilities.m in Sources */,
 				63B75F131DABF74A0060C401 /* CoursesViewController.m in Sources */,
 				63B75F0D1DABF74A0060C401 /* main.m in Sources */,
 				63D519C41DAEB7E500DE6C6D /* Student.m in Sources */,
