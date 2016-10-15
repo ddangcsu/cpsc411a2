@@ -123,7 +123,7 @@
     Student *student = self.studentList[indexPath.row];
     
     // Assign data from Model
-    cell.textLabel.text = student.fullName;
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ - Courses: %lu", student.fullName, student.enrolledCourses.count];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"CWID: %@", student.CWID];
     
     // Return the cell to Table View to display

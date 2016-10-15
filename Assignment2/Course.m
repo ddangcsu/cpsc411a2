@@ -105,4 +105,11 @@ static NSString* fScoreKey  = @"fScore";
     return output;
 }
 
+-(float)getScoreAverage {
+    // Get the average score for this course
+    return (self.hScore * self.hWeight/100.0 +
+            self.mScore * self.mWeight/100.0 +
+            self.fScore * self.fWeight/100.0);
+}
+
 @end

@@ -147,7 +147,7 @@
     
     Course* course = self.enrolledCourses[indexPath.row];
     
-    cell.textLabel.text = course.courseName;
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ - Average Score: %.2f", course.courseName, course.getScoreAverage];
     cell.detailTextLabel.text = [course getScores];
     
     return cell;

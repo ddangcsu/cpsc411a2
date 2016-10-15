@@ -19,7 +19,7 @@
 @property (assign, nonatomic) float mScore;
 @property (assign, nonatomic) float fScore;
 
-// MARK: Methods
+// MARK: Initialization
 -(instancetype) initWithName: (NSString*) name
                      hWeight: (float) homework
                      mWeight: (float) midterm
@@ -30,6 +30,7 @@
                   mWeight: (float) midterm
                   fWeight: (float) final;
 
+// MARK: Methods
 -(void) setHomeworkScore: (float) hScore
             midtermScore: (float) mScore
               finalScore: (float) fScore;
@@ -37,6 +38,7 @@
 -(NSString*) getScores;
 -(NSString*) getWeights;
 +(NSURL*) getArchivePath;
+-(float) getScoreAverage;
 
 // MARK: Override methods
 -(BOOL)isEqual:(Course*) object;
