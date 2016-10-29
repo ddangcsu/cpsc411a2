@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 
 // MARK: Utilities Methods
--(void) loadDemoCourseList;
+-(NSMutableArray<Course*>*) loadDemoCourseList;
 
 // MARK: UIActions
 -(void) enrollSelectedCoursesButton;
@@ -42,11 +42,6 @@
         self.courseList = [self loadCourseLists];
     } else {
         self.courseList = [self loadCoursesExcluding:self.enrolledCourses];
-    }
-    
-    // If we still get an empty set, we will load our demo courses
-    if (self.courseList == nil) {
-        [self loadDemoCourseList];
     }
     
     if ([self.segueIdentifier isEqualToString:@"enrollCourses"]) {
@@ -78,20 +73,15 @@
 }
 
 /* Function to create and load some Demo courses information */
--(void) loadDemoCourseList {
-    
-    if (self.courseList == nil) {
-        self.courseList = [[NSMutableArray alloc]init];
-    }
-    
+-(NSMutableArray<Course*>*) loadDemoCourseList {
+
     // To initalize a few sample courses:
     Course *c1 = [Course newCourse:@"CPSC411" hWeight:20 mWeight:40 fWeight:40];
     Course *c2 = [Course newCourse:@"CPSC456" hWeight:35 mWeight:35 fWeight:30];
     Course *c3 = [Course newCourse:@"CPSC473" hWeight:90 mWeight:5 fWeight:5];
-    
-    [self.courseList addObject:c1];
-    [self.courseList addObject:c2];
-    [self.courseList addObject:c3];
+	
+    // Return 3 samples demo courses
+    return [NSMutableArray arrayWithObjects:c1, c2, c3, nil];
     
 }
 
@@ -121,7 +111,13 @@
 /* Function to return the list of courses from file */
 -(NSMutableArray<Course*>*) loadCourseLists {
     NSString *path = [Course getArchivePath].path;
-    return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    NSMutableArray<Course*> *fromFile = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    // If we still get an empty set, we will load our demo courses
+    if (fromFile == nil) {
+        fromFile = [self loadDemoCourseList];
+    }
+    return fromFile;
 }
 
 /* Function to return the list of courses from file excluding the excluded list */
