@@ -92,7 +92,7 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Remove the data from model
-        NSLog(@"Edit Style is Style Delete Row");
+        // NSLog(@"Edit Style is Style Delete Row");
         [self.enrolledCourses removeObjectAtIndex:indexPath.row];
         
         // Refresh the view
@@ -236,7 +236,7 @@
     // Cancel to go back from Student Detail page
     UIViewController *presentFromVC = self.presentingViewController;
     
-    NSLog(@"Student Detail: %@", [presentFromVC class]);
+    // NSLog(@"Student Detail: %@", [presentFromVC class]);
     if ([presentFromVC isKindOfClass:[UITabBarController class]]) {
         // We got navigated from UITabBarController (Add Student)
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -266,6 +266,7 @@
     [self.textFieldFirstName resignFirstResponder];
     [self.textFieldLastName resignFirstResponder];
     [self.textFieldCWID resignFirstResponder];
+    self.labelError.text = nil;
     
     // Retrieve data
     NSString *first = self.textFieldFirstName.text;
@@ -290,6 +291,9 @@
     
     if (self.enrolledCourses.count < 1) {
         self.labelError.text = @"Remember to enroll class";
+    } else if (self.enrolledCourses.count > 6) {
+        self.labelError.text = @"Cannot enrolled in more than 6 courses";
+        return NO;
     }
     
     // If we get here, it means it's good
